@@ -7,8 +7,16 @@
     <link href="./index.css" rel="stylesheet"></link>
 </head>
 <body>
-    <section>
-        <button>Buy your ticket</button>
+    <section class="ticket-box">
+        <h1 id="event-name">Loading event...</h1>
+        <p id="event-description"></p>
+        <p id="event-price"></p>
+      
+        <input id="buyer-email" type="email" placeholder="Your email" />
+        <input id="ticket-qty" type="number" min="1" max="10" value="1" />
+        <button id="buy-ticket-btn">Buy ticket</button>
+      
+        <p id="purchase-status"></p>
     </section>
     <script src="./main.js"></script>
 </body>
