@@ -31,6 +31,18 @@ p {
     padding: 0;
 }
 
+.divisor {
+    background-image: url("./assets/img/0e84b322-8e8f-4eb5-a71e-b6f8a165fb94\ 2.png");
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 105px;
+}
+
+.cta{
+    font-family: "Geist Mono", monospace;
+}
+
 /* Overlay background */
 #popupOverlay {
     position: fixed;

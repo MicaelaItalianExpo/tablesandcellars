@@ -81,44 +81,44 @@ function modalManager () {
 
 function ticketQuantityManager () {
   const qtyInput = document.getElementById("ticket-qty");
-const minusBtn = document.getElementById("qty-minus");
-const plusBtn = document.getElementById("qty-plus");
-const totalPrice = document.getElementById("total-price");
+  const minusBtn = document.getElementById("qty-minus");
+  const plusBtn = document.getElementById("qty-plus");
+  const totalPrice = document.getElementById("total-price");
 
-const pricePerTicket = 95; // change this to your real ticket price
+  const pricePerTicket = 95; // change this to your real ticket price
 
-function updateTotal() {
-  let qty = parseInt(qtyInput.value, 10) || 1;
+  function updateTotal() {
+    let qty = parseInt(qtyInput.value, 10) || 1;
 
-  const min = parseInt(qtyInput.min, 10) || 1;
-  const max = parseInt(qtyInput.max, 10) || 10;
+    const min = parseInt(qtyInput.min, 10) || 1;
+    const max = parseInt(qtyInput.max, 10) || 10;
 
-  if (qty < min) qty = min;
-  if (qty > max) qty = max;
+    if (qty < min) qty = min;
+    if (qty > max) qty = max;
 
-  qtyInput.value = qty;
-  totalPrice.textContent = qty * pricePerTicket;
-}
+    qtyInput.value = qty;
+    totalPrice.textContent = qty * pricePerTicket;
+  }
 
-minusBtn.addEventListener("click", () => {
-  qtyInput.value = Math.max(
-    parseInt(qtyInput.min, 10) || 1,
-    (parseInt(qtyInput.value, 10) || 1) - 1
-  );
+  minusBtn.addEventListener("click", () => {
+    qtyInput.value = Math.max(
+      parseInt(qtyInput.min, 10) || 1,
+      (parseInt(qtyInput.value, 10) || 1) - 1
+    );
+    updateTotal();
+  });
+
+  plusBtn.addEventListener("click", () => {
+    qtyInput.value = Math.min(
+      parseInt(qtyInput.max, 10) || 10,
+      (parseInt(qtyInput.value, 10) || 1) + 1
+    );
+    updateTotal();
+  });
+
+  qtyInput.addEventListener("input", updateTotal);
+
   updateTotal();
-});
-
-plusBtn.addEventListener("click", () => {
-  qtyInput.value = Math.min(
-    parseInt(qtyInput.max, 10) || 10,
-    (parseInt(qtyInput.value, 10) || 1) + 1
-  );
-  updateTotal();
-});
-
-qtyInput.addEventListener("input", updateTotal);
-
-updateTotal();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -132,15 +132,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const params = new URLSearchParams(window.location.search);
-  const status = document.getElementById("purchase-status");
   const ticketSection = document.querySelector(".ticket-box")
 
-  if (status && params.get("checkout") === "success") {
-    ticketSection.innerHTML = "";
-    ticketSection.innerHTML = "Payment received. Confirmation is being processed.";
+  const popup = document.getElementById("popupContent");
+  if (popup && params.get("checkout") === "success") {
+    const overlay = document.getElementById("popupOverlay");
+    overlay.style.display = "flex";
+    popup.innerHTML = "";
+    popup.innerHTML = `
+                <p style="font-size: 20px; font-weight: 700; color: #0058A9; margin: 10px; text-align: center;">THANK YOU FOR YOUR PURCHASE!</p>
+                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
+                <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
+                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
+                <img src="./assets/img/TAC_GIF_SIGNATURE.gif" style="width: 80%; height: auto; margin-top: 0;">
+                <p style="font-size: 20px; font-weight: 500; color: #0058A9; margin-top: 0px;">SEE YOU THERE!</p>
+                <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center;" class="cta">*TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
+                
+                `;
   }
 
-  if (status && params.get("checkout") === "cancel") {
-    status.textContent = "Checkout was canceled.";
+  if (popup && params.get("checkout") === "cancel") {
+    popup.textContent = "Checkout was canceled.";
   }
 });

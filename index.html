@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Goudy+Bookletter+1911&family=Gruppo&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist-font@latest/style.css">
 </head>
 <body>
     <section style="background-color: #006525;">
@@ -28,54 +29,66 @@
                 </button>
             </div>
         </section>
-        <section class="ticket-box">
-            <div style="display: flex; justify-content: center; margin-block: 24px;">
-                <!-- <img src="./assets/img/TAC.png" style="width: 100%"> -->
-            </div>
-            <div style="display: flex; flex-direction: column;">
-                <div style="display: flex; flex-direction: row; justify-content: center; margin: 24px;">
-                </div>
-            </div>
-            
-            <p id="purchase-status"></p>
-        </section>
-        
-        <div id="popupOverlay">
-            <div id="popupWindow">
-                
-                <button id="closePopup">
-                    <img src="./assets/img/Vector.png" style="width: 38px;">
-                </button>
-                <div style="display: flex; flex-direction: column; align-items: center; padding-block: 30px;">
-                    <img src="./assets/logo/TAC_LOGO_COLORATO.png" style="width: 100px; height: auto;">
-                    <p style="font-size: 25px; font-weight: 700; color: #0058A9;">GET YOUR TICKET</p>
-                    <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
-                    <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
-                    <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
-                    <input id="buyer-email" type="email" placeholder="Your email" style="width: 80%; padding: 13px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 80%"/>
-                    <!-- <input id="ticket-qty" type="number" min="1" max="10" value="1" style="width: 80%; margin-top: 24px; padding: 8px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 60%"/> -->
-                    <div class="ticket-row">
-                        <p style="color: #0058A9;">Quantity:</p>
-                      
-                        <div class="qty-control">
-                          <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
-                          <input id="ticket-qty" type="number" min="1" max="10" value="1" />
-                          <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
-                        </div>
-                      
-                    </div>
-                    <div class="ticket-total" style="display: flex; flex-direction: row;">
-                      <p>Price: $</p><p id="total-price">25</p>
-                    </div>
-              
-                    <button id="buy-ticket-btn" style="margin-top: 24px; background-color: #EBD403; color: #006525; border-style: none; padding: 8px; border-radius: 50px; align-self: center; min-width: 230px;">
-                        <p style="font-size: 16px; margin-block: 0; font-weight: 700;">BUY YOUR TICKET</p>
-                    </button>
-              </div>
-            </div>
-        </div>
 
+        <section style="background-color: #C93E55; color: white; padding-block: 8px; text-align: center; margin-top: 32px;">
+           <p style="font-size: 12px;">
+                WINES PROVIDED BY MORE THAN GRAPES WINE IMPORTS
+           </p>
+        </section>
+
+        <section style="background-color: #0657A8; color: #FDFC60; padding-top: 8px; text-align: center;">
+           <p class="cta" style="font-size: 24px;">
+                A SUDDEN DECISION, <br> A MOMENT THAT CHANGES <br> EVERYTHING
+           </p>
+           <div class="divisor">
+           </div>
+        </section>
+
+        <section style="background-color: #ffffff; color: #0657A8; padding-top: 48px; text-align: center;">
+           <p class="cta" style="font-size: 24px; margin-bottom: 150px;">
+                Sign up for our newsletter & get exclusive invites! 
+           </p>
+           <p class="cta" style="font-size: 12px;">
+            *TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.
+           </p>
+        </section>
     </section>
+    <div id="popupOverlay">
+        <div id="popupWindow">
+            
+            <button id="closePopup">
+                <img src="./assets/img/Vector.png" style="width: 38px;">
+            </button>
+            <div id="popupContent" style="display: flex; flex-direction: column; align-items: center; padding-block: 30px;">
+                <img src="./assets/logo/TAC_LOGO_COLORATO.png" style="width: 80px; height: auto;">
+                <p style="font-size: 20px; font-weight: 700; color: #0058A9; margin: 10px;">GET YOUR TICKET</p>
+                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
+                <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
+                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
+                <input id="buyer-email" type="email" placeholder="Your email" style="width: 80%; padding: 13px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 80%"/>
+                <!-- <input id="ticket-qty" type="number" min="1" max="10" value="1" style="width: 80%; margin-top: 24px; padding: 8px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 60%"/> -->
+                <div class="ticket-row">
+                    <p style="color: #0058A9;">Quantity:</p>
+                  
+                    <div class="qty-control">
+                      <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
+                      <input id="ticket-qty" type="number" min="1" max="10" value="1" />
+                      <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+                    </div>
+                  
+                </div>
+                <div class="ticket-total" style="display: flex; flex-direction: row;">
+                  <p>Price: $</p><p id="total-price">25</p>
+                </div>
+          
+                <button id="buy-ticket-btn" style="margin-top: 5px; background-color: #EBD403; color: #006525; border-style: none; padding: 8px; border-radius: 50px; align-self: center; min-width: 230px;">
+                    <p style="font-size: 16px; margin-block: 0; font-weight: 700;">BUY YOUR TICKET</p>
+                </button>
+
+                <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center; margin-top: 20px;" class="cta">*TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
+          </div>
+        </div>
+    </div>
     <script src="./main.js"></script>
 </body>
 </html>
