@@ -1,0 +1,23 @@
+body{
+    background-color: #FCFCF7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Goudy Bookletter 1911", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+.subtitle {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700; 
+} 
+
+p {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400; 
+} 

@@ -75,9 +75,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const params = new URLSearchParams(window.location.search);
   const status = document.getElementById("purchase-status");
+  const ticketSection = document.querySelector(".ticket-box")
 
   if (status && params.get("checkout") === "success") {
-    status.textContent = "Payment received. Confirmation is being processed.";
+    ticketSection.innerHTML = "";
+    ticketSection.innerHTML = "Payment received. Confirmation is being processed.";
   }
 
   if (status && params.get("checkout") === "cancel") {
