@@ -1,7 +1,6 @@
 const API_BASE = "https://tac.micaela-8e6.workers.dev";
 
 async function loadTicketInfo() {
-  const status = document.getElementById("purchase-status");
 
   try {
     const res = await fetch(`${API_BASE}/api/product`);
@@ -18,21 +17,17 @@ async function loadTicketInfo() {
     document.getElementById("event-price").textContent =
       `${data.currencySymbol || ""}${amount} ${data.currency || ""}`.trim();
   } catch (err) {
-    if (status) {
-      status.textContent = err.message || "Unable to load ticket info.";
-    }
+    console.log(error)
   }
 }
 
 async function startPurchase() {
   const button = document.getElementById("buy-ticket-btn");
-  const status = document.getElementById("purchase-status");
   const emailInput = document.getElementById("buyer-email");
   const qtyInput = document.getElementById("ticket-qty");
 
   try {
     button.disabled = true;
-    status.textContent = "Redirecting to secure checkout...";
 
     const email = emailInput ? emailInput.value.trim() : "";
     const quantity = qtyInput ? Number(qtyInput.value || 1) : 1;
@@ -60,7 +55,6 @@ async function startPurchase() {
 
     window.location.href = data.url;
   } catch (err) {
-    status.textContent = err.message || "Something went wrong.";
     button.disabled = false;
   }
 }
@@ -140,15 +134,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     overlay.style.display = "flex";
     popup.innerHTML = "";
     popup.innerHTML = `
-                <p style="font-size: 20px; font-weight: 700; color: #0058A9; margin: 10px; text-align: center;">THANK YOU FOR YOUR PURCHASE!</p>
-                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
-                <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
-                <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
-                <img src="./assets/img/TAC_GIF_SIGNATURE.gif" style="width: 80%; height: auto; margin-top: 0;">
-                <p style="font-size: 20px; font-weight: 500; color: #0058A9; margin-top: 0px;">SEE YOU THERE!</p>
-                <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center;" class="cta">*TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
-                
-                `;
+      <p style="font-size: 20px; font-weight: 700; color: #0058A9; margin: 10px; text-align: center;">THANK YOU FOR YOUR PURCHASE!</p>
+      <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
+      <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
+      <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
+      <img src="./assets/img/TAC_GIF_SIGNATURE.gif" style="width: 80%; height: auto; margin-top: 0;">
+      <p style="font-size: 20px; font-weight: 500; color: #0058A9; margin-top: 0px;">SEE YOU THERE!</p>
+      <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center;" class="cta">*TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
+      
+      `;
   }
 
   if (popup && params.get("checkout") === "cancel") {
