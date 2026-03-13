@@ -3,29 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TAC | A wine dinner series</title>
     <link href="./index.css" rel="stylesheet"></link>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Goudy+Bookletter+1911&family=Gruppo&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png">
 </head>
 <body>
-    <section>
-        <div class="header">
-            <img >
+    <section style="background-color: #006525;">
+        <section>
+            <div class="header" style="display: flex; justify-content: center; align-items:center; min-height: 215px;">
+                <img src="./assets/logo/TAC_LOGO_WHITE.png" style="width: 125px; height: auto; margin-top: 25px;">
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <!-- <h1 style="color: white;">IL GIRASOLE TRATTORIA</h1>
+                <p style="color: white;" class="subtitle">2700 N Western Ave, Chicago, IL 60647</p> -->
+                
+                <img src="./assets/img/TAC 1.png" style="max-width: 350px; height: auto; margin-top: 25px;">
+                <p style="font-size: 40px; color: #EBD403; margin-block: 0px;">WINE DINNER</p>
+                <p style="font-size: 20px; color: #ffffff; margin-block: 0px;">APRIL 15, 2026 . 6.30 PM</p>
+                <button id="openPopup" style="margin-top: 24px; background-color: #EBD403; color: #006525; border-style: none; padding: 8px; border-radius: 50px; align-self: center; min-width: 230px;">
+                    <p style="font-size: 16px; margin-block: 0; font-weight: 700;">GET YOUR TICKET</p>
+                </button>
+            </div>
+        </section>
+        <section class="ticket-box">
+            <div style="display: flex; justify-content: center; margin-block: 24px;">
+                <!-- <img src="./assets/img/TAC.png" style="width: 100%"> -->
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; flex-direction: row; justify-content: center; margin: 24px;">
+                </div>
+            </div>
+            
+            <p id="purchase-status"></p>
+        </section>
+        
+        <div id="popupOverlay">
+            <div id="popupWindow">
+                
+                <button id="closePopup">
+                    <img src="./assets/img/Vector.png" style="width: 38px;">
+                </button>
+                <div style="display: flex; flex-direction: column; align-items: center; padding-block: 30px;">
+                    <img src="./assets/logo/TAC_LOGO_COLORATO.png" style="width: 100px; height: auto;">
+                    <p style="font-size: 25px; font-weight: 700; color: #0058A9;">GET YOUR TICKET</p>
+                    <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">IL GIRASOLE TRATTORIA</p>
+                    <p style="font-size: 20px; font-weight: 500; color: #C93E55; margin-top: 0px;">2700 N Western Ave, <br> Chicago, IL 60647</p>
+                    <p style="font-size: 20px; font-weight: 700; color: #006525; margin-top: 0px;">APRIL 15, 2026 . 6.30 PM</p>
+                    <input id="buyer-email" type="email" placeholder="Your email" style="width: 80%; padding: 13px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 80%"/>
+                    <!-- <input id="ticket-qty" type="number" min="1" max="10" value="1" style="width: 80%; margin-top: 24px; padding: 8px; border-style: solid; border-width: 2px; border-color: #0657A8; border-radius: 50px; max-width: 60%"/> -->
+                    <div class="ticket-row">
+                        <p style="color: #0058A9;">Quantity:</p>
+                      
+                        <div class="qty-control">
+                          <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
+                          <input id="ticket-qty" type="number" min="1" max="10" value="1" />
+                          <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+                        </div>
+                      
+                    </div>
+                    <div class="ticket-total" style="display: flex; flex-direction: row;">
+                      <p>Price: $</p><p id="total-price">25</p>
+                    </div>
+              
+                    <button id="buy-ticket-btn" style="margin-top: 24px; background-color: #EBD403; color: #006525; border-style: none; padding: 8px; border-radius: 50px; align-self: center; min-width: 230px;">
+                        <p style="font-size: 16px; margin-block: 0; font-weight: 700;">BUY YOUR TICKET</p>
+                    </button>
+              </div>
+            </div>
         </div>
-        <h1>IL GIRASOLE TRATTORIA</h1>
-        <p class="subtitle">2700 N Western Ave, Chicago, IL 60647</p>
-        <p>APRIL 15, 2026  .  6.30 PM</p>
-        <p>WINES PROVIDED BY MORE THAN GRAPES wine imports</p>
-    </section>
-    <section class="ticket-box">
-      
-        <input id="buyer-email" type="email" placeholder="Your email" />
-        <input id="ticket-qty" type="number" min="1" max="10" value="1" />
-        <button id="buy-ticket-btn">Buy ticket</button>
-      
-        <p id="purchase-status"></p>
+
     </section>
     <script src="./main.js"></script>
 </body>

@@ -65,8 +65,66 @@ async function startPurchase() {
   }
 }
 
+function modalManager () {
+  const openBtn = document.getElementById("openPopup");
+  const closeBtn = document.getElementById("closePopup");
+  const overlay = document.getElementById("popupOverlay");
+
+  openBtn.addEventListener("click", () => {
+    overlay.style.display = "flex";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+  });
+}
+
+function ticketQuantityManager () {
+  const qtyInput = document.getElementById("ticket-qty");
+const minusBtn = document.getElementById("qty-minus");
+const plusBtn = document.getElementById("qty-plus");
+const totalPrice = document.getElementById("total-price");
+
+const pricePerTicket = 95; // change this to your real ticket price
+
+function updateTotal() {
+  let qty = parseInt(qtyInput.value, 10) || 1;
+
+  const min = parseInt(qtyInput.min, 10) || 1;
+  const max = parseInt(qtyInput.max, 10) || 10;
+
+  if (qty < min) qty = min;
+  if (qty > max) qty = max;
+
+  qtyInput.value = qty;
+  totalPrice.textContent = qty * pricePerTicket;
+}
+
+minusBtn.addEventListener("click", () => {
+  qtyInput.value = Math.max(
+    parseInt(qtyInput.min, 10) || 1,
+    (parseInt(qtyInput.value, 10) || 1) - 1
+  );
+  updateTotal();
+});
+
+plusBtn.addEventListener("click", () => {
+  qtyInput.value = Math.min(
+    parseInt(qtyInput.max, 10) || 10,
+    (parseInt(qtyInput.value, 10) || 1) + 1
+  );
+  updateTotal();
+});
+
+qtyInput.addEventListener("input", updateTotal);
+
+updateTotal();
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   await loadTicketInfo();
+  modalManager();
+  ticketQuantityManager();
 
   const button = document.getElementById("buy-ticket-btn");
   if (button) {

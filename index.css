@@ -1,10 +1,12 @@
 body{
     background-color: #FCFCF7;
+    margin: 0;
+    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "Goudy Bookletter 1911", serif;
-    font-weight: 400;
+    font-weight: 300;
     font-style: normal;
 }
   
@@ -21,3 +23,112 @@ p {
     font-variant: normal; 
     font-weight: 400; 
 } 
+
+.header {
+    background-image: url("./assets/img/il_girasole 3.png");
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Overlay background */
+#popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  
+    background: rgba(0,0,0,0.5);
+  
+    display: none; /* hidden by default */
+  
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Popup window */
+  #popupWindow {
+    width: 80vw;
+    height: 80vh;
+    max-width: 768px;
+  
+    background: white;
+    padding: 30px;
+  
+    position: relative;
+    overflow: auto;
+  }
+  
+  /* Close button */
+  #closePopup {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+
+  .ticket-row {
+    display: flex;
+    align-items: center;
+    width: 75%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* gap: 18px; */
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  
+  .ticket-label,
+  .ticket-total {
+    font-size: 1rem;
+    color: #0657A8;
+  }
+  
+  .qty-control {
+    display: flex;
+    align-items: center;
+    border: 2px solid #0657A8;
+    border-radius: 999px;
+    overflow: hidden;
+    background: white;
+  }
+  
+  .qty-control button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: white;
+    color: #0657A8;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+  
+  .qty-control button:hover {
+    background: #f2f7fc;
+  }
+  
+  #ticket-qty {
+    width: 60px;
+    border: none;
+    text-align: center;
+    font-size: 1rem;
+    color: #0657A8;
+    outline: none;
+  }
+  
+  /* Optional: remove browser arrows */
+  #ticket-qty::-webkit-outer-spin-button,
+  #ticket-qty::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  #ticket-qty[type="number"] {
+    -moz-appearance: textfield;
+  }
