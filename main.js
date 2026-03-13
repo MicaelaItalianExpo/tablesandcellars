@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
   }
 
-  if (popup && params.get("checkout") === "cancel") {
-    popup.textContent = "Checkout was canceled.";
-  }
+  // if (popup && params.get("checkout") === "cancel") {
+  //   popup.textContent = "Checkout was canceled.";
+  // }
 });
