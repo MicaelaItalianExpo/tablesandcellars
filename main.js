@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const popup = document.getElementById("popupContent");
   if (popup && params.get("checkout") === "success") {
+    button.disabled = false;
     const overlay = document.getElementById("popupOverlay");
     overlay.style.display = "flex";
     popup.innerHTML = "";
@@ -145,7 +146,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
   }
 
-  // if (popup && params.get("checkout") === "cancel") {
-  //   popup.textContent = "Checkout was canceled.";
-  // }
+  if (popup && params.get("checkout") === "cancel") {
+    popup.textContent = "Checkout was canceled.";
+    button.disabled = false;
+  }
 });
+
+
