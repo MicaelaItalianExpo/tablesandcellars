@@ -115,8 +115,55 @@ function ticketQuantityManager () {
   updateTotal();
 }
 
+function ageRestrictionPopupManager () {
+  const gate = document.getElementById("age-gate");
+    const checkbox = document.getElementById("age-confirm-checkbox");
+    const enterBtn = document.getElementById("age-enter-btn");
+    const exitBtn = document.getElementById("age-exit-btn");
+
+    const STORAGE_KEY = "age_verified_21_plus";
+
+    function openGate() {
+      gate.classList.add("is-open");
+      gate.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeGate() {
+      gate.classList.remove("is-open");
+      gate.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function hasVerifiedAge() {
+      return localStorage.getItem(STORAGE_KEY) === "true";
+    }
+
+    function saveVerifiedAge() {
+      localStorage.setItem(STORAGE_KEY, "true");
+    }
+
+    checkbox.addEventListener("change", function () {
+      enterBtn.disabled = !checkbox.checked;
+    });
+
+    enterBtn.addEventListener("click", function () {
+      saveVerifiedAge();
+      closeGate();
+    });
+
+    exitBtn.addEventListener("click", function () {
+      window.location.href = "https://www.google.com";
+    });
+
+    if (!hasVerifiedAge()) {
+      openGate();
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   // await loadTicketInfo();
+  ageRestrictionPopupManager();
   modalManager();
   ticketQuantityManager();
 
@@ -147,7 +194,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (popup && params.get("checkout") === "cancel") {
-    popup.textContent = "Checkout was canceled.";
     button.disabled = false;
   }
 });

@@ -144,3 +144,115 @@ p {
   #ticket-qty[type="number"] {
     -moz-appearance: textfield;
   }
+
+  .age-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  
+  .age-gate.is-open {
+    display: flex;
+  }
+  
+  .age-gate__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+  }
+  
+  .age-gate__modal {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    background: #ffffff;
+    color: #1f1f1f;
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    text-align: left;
+    z-index: 1;
+  }
+  
+  .age-gate__modal h2 {
+    margin: 0 0 14px;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+  
+  .age-gate__text {
+    margin: 0 0 14px;
+    line-height: 1.6;
+  }
+  
+  .age-gate__list {
+    margin: 0 0 16px 20px;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  .age-gate__list li {
+    margin-bottom: 8px;
+  }
+  
+  .age-gate__small,
+  .age-gate__footnote {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .age-gate__checkbox {
+    margin: 18px 0 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .age-gate__checkbox input {
+    margin-top: 4px;
+  }
+  
+  .age-gate__checkbox label {
+    line-height: 1.5;
+  }
+  
+  .age-gate__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .age-gate__btn {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  .age-gate__btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  .age-gate__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .age-gate__btn--primary {
+    background: #111;
+    color: #fff;
+  }
+  
+  .age-gate__btn--secondary {
+    background: #e9e9e9;
+    color: #111;
+  }

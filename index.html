@@ -49,7 +49,7 @@
                 Sign up for our newsletter & get exclusive invites! 
            </p>
            <p class="cta" style="font-size: 12px;">
-            *TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.
+            *TASTINGS PROVIDED IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.
            </p>
         </section>
     </section>
@@ -85,10 +85,55 @@
                     <p style="font-size: 16px; margin-block: 0; font-weight: 700;">BUY YOUR TICKET</p>
                 </button>
 
-                <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center; margin-top: 20px;" class="cta">*TASTINGS PROVIDED IN SAMPLE SIZES IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
+                <p style="font-size: 10px; color: #0058A9; margin-top: 0px; text-align: center; margin-top: 20px;" class="cta">*TASTINGS PROVIDED IN COMPLIANCE WITH ILLINOIS LAW. SERVICE RESTRICTED TO 21+. PLEASE DRINK RESPONSIBLY.</p>
           </div>
         </div>
     </div>
+
+    <div id="age-gate" class="age-gate" aria-hidden="true">
+        <div class="age-gate__backdrop"></div>
+      
+        <div
+          class="age-gate__modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="age-gate-title"
+          aria-describedby="age-gate-description"
+        >
+          <h2 id="age-gate-title">Age Confirmation</h2>
+      
+          <p id="age-gate-description" class="age-gate__text">
+            Welcome to our wine dinner experience.
+          </p>
+      
+          <p class="age-gate__text">
+            This website is intended for adults of legal drinking age.<br>
+            By entering, you confirm that you are 21 years of age or older.
+          </p>
+      
+          <div class="age-gate__checkbox">
+            <input type="checkbox" id="age-confirm-checkbox" />
+            <label for="age-confirm-checkbox">
+              I confirm that I am 21 years of age or older and legally permitted to access this website.
+            </label>
+          </div>
+      
+          <div class="age-gate__actions">
+            <button id="age-exit-btn" class="age-gate__btn age-gate__btn--secondary" type="button">
+              Exit
+            </button>
+            <button id="age-enter-btn" class="age-gate__btn age-gate__btn--primary" type="button" disabled>
+              Enter Site
+            </button>
+          </div>
+      
+          <p class="age-gate__footnote">
+            By continuing, you acknowledge and accept these conditions of access.
+          </p>
+        </div>
+      </div>
+
+
     <script src="./main.js"></script>
 </body>
 </html>
