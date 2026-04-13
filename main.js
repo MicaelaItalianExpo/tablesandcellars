@@ -21,41 +21,66 @@ const API_BASE = "https://tac.micaela-8e6.workers.dev";
 //   }
 // }
 
+// async function startPurchase() {
+//   const button = document.getElementById("buy-ticket-btn");
+//   const emailInput = document.getElementById("buyer-email");
+//   const qtyInput = document.getElementById("ticket-qty");
+
+//   try {
+//     button.disabled = true;
+
+//     const email = emailInput ? emailInput.value.trim() : "";
+//     const quantity = qtyInput ? Number(qtyInput.value || 1) : 1;
+
+//     const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({
+//         email,
+//         quantity
+//       })
+//     });
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       throw new Error(data.error || "Unable to start checkout");
+//     }
+
+//     if (!data.url) {
+//       throw new Error("Missing checkout URL");
+//     }
+
+//     window.location.href = data.url;
+//   } catch (err) {
+//     button.disabled = false;
+//   }
+// }
+
+const PAYMENT_LINK = "https://buy.stripe.com/00w28t84e0CG306dHMg3600";
+
 async function startPurchase() {
   const button = document.getElementById("buy-ticket-btn");
   const emailInput = document.getElementById("buyer-email");
-  const qtyInput = document.getElementById("ticket-qty");
 
   try {
     button.disabled = true;
 
     const email = emailInput ? emailInput.value.trim() : "";
-    const quantity = qtyInput ? Number(qtyInput.value || 1) : 1;
 
-    const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        quantity
-      })
-    });
+    let checkoutUrl = PAYMENT_LINK;
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.error || "Unable to start checkout");
+    if (email) {
+      const separator = PAYMENT_LINK.includes("?") ? "&" : "?";
+      checkoutUrl += `${separator}prefilled_email=${encodeURIComponent(email)}`;
     }
 
-    if (!data.url) {
-      throw new Error("Missing checkout URL");
-    }
-
-    window.location.href = data.url;
+    window.location.href = checkoutUrl;
   } catch (err) {
     button.disabled = false;
+    console.error(err);
   }
 }
 
@@ -165,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // await loadTicketInfo();
   ageRestrictionPopupManager();
   modalManager();
-  ticketQuantityManager();
+  // ticketQuantityManager();
 
   const button = document.getElementById("buy-ticket-btn");
   if (button) {
