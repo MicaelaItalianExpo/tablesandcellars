@@ -1,4 +1,4 @@
-const API_BASE = "https://tac.micaela-8e6.workers.dev";
+// const API_BASE = "https://tac.micaela-8e6.workers.dev";
 
 // async function loadTicketInfo() {
 
