@@ -337,7 +337,7 @@ a different filename.
 ===================================================== */
 
 .provider-strip {
-  margin-top: 32px;
+  /* margin-top: 32px; */
   padding-block: 8px;
 
   background-color: var(--pink);

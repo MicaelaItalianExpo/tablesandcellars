@@ -162,7 +162,7 @@
 //   }
 // });
 
-const PAYMENT_LINK = "https://buy.stripe.com/6oU5kF98ibhkcAGbzEg3602";
+const PAYMENT_LINK = "https://buy.stripe.com/bJe3cxfwG3OS306gTYg3603";
 
 function startPurchase() {
   const button = document.getElementById("buy-ticket-btn");
