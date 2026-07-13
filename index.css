@@ -912,7 +912,7 @@ a different filename.
   }
 
   .provider-strip {
-      margin-top: 16px;
+      /* margin-top: 16px; */
   }
 
   .menu-section {
