@@ -192,26 +192,67 @@ function startPurchase() {
   }
 }
 
+// function modalManager() {
+//   const openBtn = document.getElementById("openPopup");
+//   const closeBtn = document.getElementById("closePopup");
+//   const overlay = document.getElementById("popupOverlay");
+
+//   if (!openBtn || !closeBtn || !overlay) {
+//     return;
+//   }
+
+//   openBtn.addEventListener("click", () => {
+//     overlay.style.display = "flex";
+//   });
+
+//   closeBtn.addEventListener("click", () => {
+//     overlay.style.display = "none";
+//   });
+
+//   overlay.addEventListener("click", (event) => {
+//     if (event.target === overlay) {
+//       overlay.style.display = "none";
+//     }
+//   });
+// }
+
 function modalManager() {
-  const openBtn = document.getElementById("openPopup");
-  const closeBtn = document.getElementById("closePopup");
+  const openButtons = document.querySelectorAll(".open-popup-button");
+  const closeButton = document.getElementById("closePopup");
   const overlay = document.getElementById("popupOverlay");
 
-  if (!openBtn || !closeBtn || !overlay) {
+  if (!openButtons.length || !closeButton || !overlay) {
+    console.warn("Ticket popup: required elements are missing.");
     return;
   }
 
-  openBtn.addEventListener("click", () => {
+  function openPopup() {
     overlay.style.display = "flex";
+    overlay.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closePopup() {
+    overlay.style.display = "none";
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  openButtons.forEach((button) => {
+    button.addEventListener("click", openPopup);
   });
 
-  closeBtn.addEventListener("click", () => {
-    overlay.style.display = "none";
-  });
+  closeButton.addEventListener("click", closePopup);
 
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) {
-      overlay.style.display = "none";
+      closePopup();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closePopup();
     }
   });
 }
