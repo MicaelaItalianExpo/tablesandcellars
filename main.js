@@ -217,11 +217,11 @@ function startPurchase() {
 // }
 
 function modalManager() {
-  const openButtons = document.querySelectorAll(".open-popup-button");
+  const openButtons = document.getElementById("openPopup");
   const closeButton = document.getElementById("closePopup");
   const overlay = document.getElementById("popupOverlay");
 
-  if (!openButtons.length || !closeButton || !overlay) {
+  if (!openButtons || !closeButton || !overlay) {
     console.warn("Ticket popup: required elements are missing.");
     return;
   }
@@ -238,9 +238,7 @@ function modalManager() {
     document.body.style.overflow = "";
   }
 
-  openButtons.forEach((button) => {
-    button.addEventListener("click", openPopup);
-  });
+  openButtons.addEventListener("click", openPopup);
 
   closeButton.addEventListener("click", closePopup);
 
@@ -364,399 +362,400 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const logo = document.querySelector(".scrolling-logo");
-    const logoSlot = document.querySelector(".header-logo-slot");
-    const header = document.querySelector(".header");
-
-    if (!logo || !logoSlot || !header) {
-        console.warn("Scrolling logo: required elements are missing.");
-        return;
-    }
-
-    const clamp = (value, min, max) => {
-        return Math.min(Math.max(value, min), max);
-    };
-
-    const lerp = (start, end, progress) => {
-        return start + (end - start) * progress;
-    };
-
-    /*
-    Gives the animation a softer, more natural ending.
-    */
-    const easeOutCubic = (progress) => {
-        return 1 - Math.pow(1 - progress, 3);
-    };
-
-    let animationFrameRequested = false;
-
-    function updateScrollingLogo() {
-        animationFrameRequested = false;
-
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        /*
-        The animation finishes after approximately 60% of
-        the viewport height has been scrolled.
-
-        Increase this number to make the shrinking slower.
-        Decrease it to make the shrinking faster.
-        */
-        const animationDistance = Math.max(
-            380,
-            viewportHeight * 0.6
-        );
-
-        const rawProgress = clamp(
-            window.scrollY / animationDistance,
-            0,
-            1
-        );
-
-        const progress = easeOutCubic(rawProgress);
-
-        /*
-        Starting position: center of the hero.
-        */
-        const startX = viewportWidth / 2;
-        const startY = viewportHeight * 0.55;
-
-        /*
-        Finishing position: center of the invisible header slot.
-        Because the header is fixed, this position remains stable.
-        */
-        const slotRect = logoSlot.getBoundingClientRect();
-
-        const endX = slotRect.left + slotRect.width / 2;
-        const endY = slotRect.top + slotRect.height / 2;
-
-        /*
-        Starting and ending logo sizes.
-        */
-        const startWidth = Math.min(
-            viewportWidth * 0.6,
-            1700
-        );
-
-        const endWidth = slotRect.width;
-
-        logo.style.left = `${lerp(startX, endX, progress)}px`;
-        logo.style.top = `${lerp(startY, endY, progress)}px`;
-        logo.style.width = `${lerp(
-            startWidth,
-            endWidth,
-            progress
-        )}px`;
-
-        /*
-        Change the header background gradually during the animation.
-        */
-        header.classList.toggle(
-            "is-docked",
-            rawProgress > 0.18
-        );
-
-        /*
-        Make the logo clickable once it has reached the header.
-        */
-        logo.classList.toggle(
-            "is-docked",
-            rawProgress > 0.96
-        );
-    }
-
-    function requestLogoUpdate() {
-        if (animationFrameRequested) {
-            return;
-        }
-
-        animationFrameRequested = true;
-        window.requestAnimationFrame(updateScrollingLogo);
-    }
-
-    window.addEventListener("scroll", requestLogoUpdate, {
-        passive: true
-    });
-
-    window.addEventListener("resize", requestLogoUpdate);
-
-    updateScrollingLogo();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const marqueeRoot = document.querySelector(".vertical-marquees");
-
-  if (!marqueeRoot) {
-      console.warn("Vertical marquee: .vertical-marquees was not found.");
-      return;
-  }
-
-  const columns = Array.from(
-      marqueeRoot.querySelectorAll(".marquee-column")
-  );
-
-  const reducedMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-  );
-
-  let resizeTimer = null;
-
-  /*
-  Wait for each image to either load or fail before measuring
-  the height of the marquee groups.
-  */
-  const waitForImage = (image) => {
-      if (image.complete) {
-          return Promise.resolve();
-      }
-
-      return new Promise((resolve) => {
-          image.addEventListener("load", resolve, {
-              once: true
-          });
-
-          image.addEventListener("error", resolve, {
-              once: true
-          });
-      });
-  };
-
-  /*
-  Removes everything previously generated by this script.
-
-  This allows the marquee to be safely rebuilt when the
-  viewport changes size.
-  */
-  function resetColumn(column) {
-      const track = column.querySelector(".marquee-track");
-
-      if (!track) {
-          return null;
-      }
-
-      const originalGroup = track.querySelector(
-          ".marquee-group:not([data-marquee-clone])"
-      );
-
-      if (!originalGroup) {
-          return null;
-      }
-
-      track.classList.remove("is-animated");
-
-      track
-          .querySelectorAll("[data-marquee-clone]")
-          .forEach((clone) => clone.remove());
-
-      originalGroup
-          .querySelectorAll("[data-marquee-repeat]")
-          .forEach((repeat) => repeat.remove());
-
-      track.style.removeProperty("--travel");
-      track.style.removeProperty("--duration");
-
-      return {
-          track,
-          originalGroup
-      };
-  }
-
-  function buildColumn(column) {
-      const elements = resetColumn(column);
-
-      if (!elements) {
-          return;
-      }
-
-      const { track, originalGroup } = elements;
-
-      /*
-      Do not create the moving loop when reduced-motion
-      mode is enabled.
-      */
-      if (reducedMotionQuery.matches) {
-          return;
-      }
-
-      /*
-      A hidden mobile column has no measurable height.
-      It will be rebuilt automatically if the viewport
-      later becomes wider.
-      */
-      if (
-          column.offsetParent === null ||
-          column.clientHeight === 0
-      ) {
-          return;
-      }
-
-      const originalItems = Array.from(
-          originalGroup.children
-      );
-
-      if (originalItems.length === 0) {
-          return;
-      }
-
-      const groupStyles = window.getComputedStyle(
-          originalGroup
-      );
-
-      const imageGap =
-          parseFloat(groupStyles.rowGap) || 0;
-
-      const requiredHeight =
-          column.clientHeight + imageGap;
-
-      let repetitionCount = 0;
-      const maximumRepetitions = 30;
-
-      /*
-      If a column contains only a few images, repeat its
-      original image set until the group is taller than
-      the visible column.
-
-      This prevents empty areas during the animation.
-      */
-      while (
-          originalGroup.getBoundingClientRect().height <
-              requiredHeight &&
-          repetitionCount < maximumRepetitions
-      ) {
-          originalItems.forEach((item) => {
-              const repeatedItem = item.cloneNode(true);
-
-              repeatedItem.setAttribute(
-                  "data-marquee-repeat",
-                  ""
-              );
-
-              originalGroup.appendChild(repeatedItem);
-          });
-
-          repetitionCount += 1;
-      }
-
-      const groupHeight =
-          originalGroup.getBoundingClientRect().height;
-
-      if (groupHeight === 0) {
-          return;
-      }
-
-      /*
-      Duplicate the completed group to create the second
-      half of the seamless loop.
-      */
-      const clonedGroup = originalGroup.cloneNode(true);
-
-      clonedGroup.setAttribute(
-          "data-marquee-clone",
-          ""
-      );
-
-      clonedGroup.setAttribute(
-          "aria-hidden",
-          "true"
-      );
-
-      track.appendChild(clonedGroup);
-
-      /*
-      Measure the exact distance between the beginning of
-      the first group and the beginning of its duplicate.
-
-      This includes the gap between the two groups.
-      */
-      const firstGroupTop =
-          originalGroup.getBoundingClientRect().top;
-
-      const clonedGroupTop =
-          clonedGroup.getBoundingClientRect().top;
-
-      const travelDistance =
-          clonedGroupTop - firstGroupTop;
-
-      /*
-      data-speed is measured in pixels per second.
-
-      A larger number creates faster movement.
-      Because the duration is calculated from the actual
-      group height, columns with different image counts
-      still move at a consistent visual speed.
-      */
-      const speed = Math.max(
-          Number.parseFloat(column.dataset.speed) || 30,
-          1
-      );
-
-      const duration = travelDistance / speed;
-
-      track.style.setProperty(
-          "--travel",
-          `${travelDistance}px`
-      );
-
-      track.style.setProperty(
-          "--duration",
-          `${duration}s`
-      );
-
-      /*
-      Force the browser to register the reset before
-      restarting the animation.
-      */
-      void track.offsetHeight;
-
-      requestAnimationFrame(() => {
-          track.classList.add("is-animated");
-      });
-  }
-
-  function buildAllColumns() {
-      columns.forEach(buildColumn);
-  }
-
-  const images = Array.from(
-      marqueeRoot.querySelectorAll("img")
-  );
-
-  Promise.all(images.map(waitForImage)).then(() => {
-      buildAllColumns();
-
-      /*
-      Recalculate the loop when the marquee container
-      changes dimensions.
-      */
-      const resizeObserver = new ResizeObserver(() => {
-          window.clearTimeout(resizeTimer);
-
-          resizeTimer = window.setTimeout(() => {
-              buildAllColumns();
-          }, 150);
-      });
-
-      resizeObserver.observe(marqueeRoot);
-  });
-
-  /*
-  Rebuild immediately when the user's reduced-motion
-  preference changes.
-  */
-  const handleMotionPreferenceChange = () => {
-      buildAllColumns();
-  };
-
-  if (typeof reducedMotionQuery.addEventListener === "function") {
-      reducedMotionQuery.addEventListener(
-          "change",
-          handleMotionPreferenceChange
-      );
-  } else {
-      reducedMotionQuery.addListener(
-          handleMotionPreferenceChange
-      );
-  }
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     const logo = document.querySelector(".scrolling-logo");
+//     const logoSlot = document.querySelector(".header-logo-slot");
+//     const header = document.querySelector(".header");
+
+//     if (!logo || !logoSlot || !header) {
+//         console.warn("Scrolling logo: required elements are missing.");
+//         return;
+//     }
+
+//     const clamp = (value, min, max) => {
+//         return Math.min(Math.max(value, min), max);
+//     };
+
+//     const lerp = (start, end, progress) => {
+//         return start + (end - start) * progress;
+//     };
+
+//     /*
+//     Gives the animation a softer, more natural ending.
+//     */
+//     const easeOutCubic = (progress) => {
+//         return 1 - Math.pow(1 - progress, 3);
+//     };
+
+//     let animationFrameRequested = false;
+
+//     function updateScrollingLogo() {
+//         animationFrameRequested = false;
+
+//         const viewportWidth = window.innerWidth;
+//         const viewportHeight = window.innerHeight;
+
+//         /*
+//         The animation finishes after approximately 60% of
+//         the viewport height has been scrolled.
+
+//         Increase this number to make the shrinking slower.
+//         Decrease it to make the shrinking faster.
+//         */
+//         const animationDistance = Math.max(
+//             380,
+//             viewportHeight * 0.6
+//         );
+
+//         const rawProgress = clamp(
+//             window.scrollY / animationDistance,
+//             0,
+//             1
+//         );
+
+//         const progress = easeOutCubic(rawProgress);
+
+//         /*
+//         Starting position: center of the hero.
+//         */
+//         const startX = viewportWidth / 2;
+//         const startY = viewportHeight * 0.55;
+
+//         /*
+//         Finishing position: center of the invisible header slot.
+//         Because the header is fixed, this position remains stable.
+//         */
+//         const slotRect = logoSlot.getBoundingClientRect();
+
+//         const endX = slotRect.left + slotRect.width / 2;
+//         const endY = slotRect.top + slotRect.height / 2;
+
+//         /*
+//         Starting and ending logo sizes.
+//         */
+//         const startWidth = Math.min(
+//             viewportWidth * 0.6,
+//             1700
+//         );
+
+//         const endWidth = slotRect.width;
+
+//         logo.style.left = `${lerp(startX, endX, progress)}px`;
+//         logo.style.top = `${lerp(startY, endY, progress)}px`;
+//         logo.style.width = `${lerp(
+//             startWidth,
+//             endWidth,
+//             progress
+//         )}px`;
+
+//         /*
+//         Change the header background gradually during the animation.
+//         */
+//         header.classList.toggle(
+//             "is-docked",
+//             rawProgress > 0.18
+//         );
+
+//         /*
+//         Make the logo clickable once it has reached the header.
+//         */
+//         logo.classList.toggle(
+//             "is-docked",
+//             rawProgress > 0.96
+//         );
+//     }
+
+//     function requestLogoUpdate() {
+//         if (animationFrameRequested) {
+//             return;
+//         }
+
+//         animationFrameRequested = true;
+//         window.requestAnimationFrame(updateScrollingLogo);
+//     }
+
+//     window.addEventListener("scroll", requestLogoUpdate, {
+//         passive: true
+//     });
+
+//     window.addEventListener("resize", requestLogoUpdate);
+
+//     updateScrollingLogo();
+// });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const marqueeRoot = document.querySelector(".vertical-marquees");
+
+//   if (!marqueeRoot) {
+//       console.warn("Vertical marquee: .vertical-marquees was not found.");
+//       return;
+//   }
+
+//   const columns = Array.from(
+//       marqueeRoot.querySelectorAll(".marquee-column")
+//   );
+
+//   const reducedMotionQuery = window.matchMedia(
+//       "(prefers-reduced-motion: reduce)"
+//   );
+
+//   let resizeTimer = null;
+
+//   /*
+//   Wait for each image to either load or fail before measuring
+//   the height of the marquee groups.
+//   */
+//   const waitForImage = (image) => {
+//       if (image.complete) {
+//           return Promise.resolve();
+//       }
+
+//       return new Promise((resolve) => {
+//           image.addEventListener("load", resolve, {
+//               once: true
+//           });
+
+//           image.addEventListener("error", resolve, {
+//               once: true
+//           });
+//       });
+//   };
+
+//   /*
+//   Removes everything previously generated by this script.
+
+//   This allows the marquee to be safely rebuilt when the
+//   viewport changes size.
+//   */
+//   function resetColumn(column) {
+//       const track = column.querySelector(".marquee-track");
+
+//       if (!track) {
+//           return null;
+//       }
+
+//       const originalGroup = track.querySelector(
+//           ".marquee-group:not([data-marquee-clone])"
+//       );
+
+//       if (!originalGroup) {
+//           return null;
+//       }
+
+//       track.classList.remove("is-animated");
+
+//       track
+//           .querySelectorAll("[data-marquee-clone]")
+//           .forEach((clone) => clone.remove());
+
+//       originalGroup
+//           .querySelectorAll("[data-marquee-repeat]")
+//           .forEach((repeat) => repeat.remove());
+
+//       track.style.removeProperty("--travel");
+//       track.style.removeProperty("--duration");
+
+//       return {
+//           track,
+//           originalGroup
+//       };
+//   }
+
+//   function buildColumn(column) {
+//       const elements = resetColumn(column);
+
+//       if (!elements) {
+//           return;
+//       }
+
+//       const { track, originalGroup } = elements;
+
+//       /*
+//       Do not create the moving loop when reduced-motion
+//       mode is enabled.
+//       */
+//       if (reducedMotionQuery.matches) {
+//           return;
+//       }
+
+//       /*
+//       A hidden mobile column has no measurable height.
+//       It will be rebuilt automatically if the viewport
+//       later becomes wider.
+//       */
+//       if (
+//           column.offsetParent === null ||
+//           column.clientHeight === 0
+//       ) {
+//           return;
+//       }
+
+//       const originalItems = Array.from(
+//           originalGroup.children
+//       );
+
+//       if (originalItems.length === 0) {
+//           return;
+//       }
+
+//       const groupStyles = window.getComputedStyle(
+//           originalGroup
+//       );
+
+//       const imageGap =
+//           parseFloat(groupStyles.rowGap) || 0;
+
+//       const requiredHeight =
+//           column.clientHeight + imageGap;
+
+//       let repetitionCount = 0;
+//       const maximumRepetitions = 30;
+
+//       /*
+//       If a column contains only a few images, repeat its
+//       original image set until the group is taller than
+//       the visible column.
+
+//       This prevents empty areas during the animation.
+//       */
+//       while (
+//           originalGroup.getBoundingClientRect().height <
+//               requiredHeight &&
+//           repetitionCount < maximumRepetitions
+//       ) {
+//           originalItems.forEach((item) => {
+//               const repeatedItem = item.cloneNode(true);
+
+//               repeatedItem.setAttribute(
+//                   "data-marquee-repeat",
+//                   ""
+//               );
+
+//               originalGroup.appendChild(repeatedItem);
+//           });
+
+//           repetitionCount += 1;
+//       }
+
+//       const groupHeight =
+//           originalGroup.getBoundingClientRect().height;
+
+//       if (groupHeight === 0) {
+//           return;
+//       }
+
+//       /*
+//       Duplicate the completed group to create the second
+//       half of the seamless loop.
+//       */
+//       const clonedGroup = originalGroup.cloneNode(true);
+
+//       clonedGroup.setAttribute(
+//           "data-marquee-clone",
+//           ""
+//       );
+
+//       clonedGroup.setAttribute(
+//           "aria-hidden",
+//           "true"
+//       );
+
+//       track.appendChild(clonedGroup);
+
+//       /*
+//       Measure the exact distance between the beginning of
+//       the first group and the beginning of its duplicate.
+
+//       This includes the gap between the two groups.
+//       */
+//       const firstGroupTop =
+//           originalGroup.getBoundingClientRect().top;
+
+//       const clonedGroupTop =
+//           clonedGroup.getBoundingClientRect().top;
+
+//       const travelDistance =
+//           clonedGroupTop - firstGroupTop;
+
+//       /*
+//       data-speed is measured in pixels per second.
+
+//       A larger number creates faster movement.
+//       Because the duration is calculated from the actual
+//       group height, columns with different image counts
+//       still move at a consistent visual speed.
+//       */
+//       const speed = Math.max(
+//           Number.parseFloat(column.dataset.speed) || 30,
+//           1
+//       );
+
+//       const duration = travelDistance / speed;
+
+//       track.style.setProperty(
+//           "--travel",
+//           `${travelDistance}px`
+//       );
+
+//       track.style.setProperty(
+//           "--duration",
+//           `${duration}s`
+//       );
+
+//       /*
+//       Force the browser to register the reset before
+//       restarting the animation.
+//       */
+//       void track.offsetHeight;
+
+//       requestAnimationFrame(() => {
+//           track.classList.add("is-animated");
+//       });
+//   }
+
+//   function buildAllColumns() {
+//       columns.forEach(buildColumn);
+//   }
+
+//   const images = Array.from(
+//       marqueeRoot.querySelectorAll("img")
+//   );
+
+//   Promise.all(images.map(waitForImage)).then(() => {
+//       buildAllColumns();
+
+//       /*
+//       Recalculate the loop when the marquee container
+//       changes dimensions.
+//       */
+//       const resizeObserver = new ResizeObserver(() => {
+//           window.clearTimeout(resizeTimer);
+
+//           resizeTimer = window.setTimeout(() => {
+//               buildAllColumns();
+//           }, 150);
+//       });
+
+//       resizeObserver.observe(marqueeRoot);
+//   });
+
+//   /*
+//   Rebuild immediately when the user's reduced-motion
+//   preference changes.
+//   */
+//   const handleMotionPreferenceChange = () => {
+//       buildAllColumns();
+//   };
+
+//   if (typeof reducedMotionQuery.addEventListener === "function") {
+//       reducedMotionQuery.addEventListener(
+//           "change",
+//           handleMotionPreferenceChange
+//       );
+//   } else {
+//       reducedMotionQuery.addListener(
+//           handleMotionPreferenceChange
+//       );
+//   }
+// });
+

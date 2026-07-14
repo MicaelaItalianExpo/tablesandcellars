@@ -82,6 +82,8 @@ img {
 .site-wrapper {
   position: relative;
   background-color: var(--green);
+  display: flex;
+  flex-direction: column;
 }
 
 /* =====================================================
@@ -103,11 +105,12 @@ img {
   margin: 0;
   padding: 0 24px;
 
-  background-color: transparent;
+  /* background-color: transparent; */
+  background-image: url("./assets/img/figowinebar.png");
 
-  transition:
+  /* transition:
       background-color 0.35s ease,
-      box-shadow 0.35s ease;
+      box-shadow 0.35s ease; */
 }
 
 /* Applied by JavaScript as the logo approaches the header */
@@ -187,8 +190,19 @@ JavaScript reads its position and dimensions.
 .tickets-link {
   padding: 24px;
   border-radius: 10px;
-  background-color: var(--yellow);
-  color: var(--pink);
+  /* background-color: var(--yellow);
+  color: var(--pink); */
+}
+
+.hero-button {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(30px, 8%, 90px);
+
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 30vw;
+  height: 50px;
 }
 
 .header-mobile-container {
@@ -241,14 +255,21 @@ shrinks toward .header-logo-slot while scrolling.
 
 .hero-section {
   position: relative;
+  margin-top: var(--header-height);
 
   width: 100%;
-  min-height: 100vh;
+  min-height: 30vh;
 
   overflow: hidden;
 
   /* background-color: var(--green); */
   background-color: white;
+}
+
+.hero-video {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /*
@@ -262,11 +283,9 @@ a different filename.
   justify-content: center;
 
   width: 100%;
-  min-height: 100vh;
-  padding: var(--header-height) 20px 20px;
+  height: 30vh;
+  padding: var(--header-height);
 
-  /* background-image:
-      url("./"); */
   background-color: white;
   background-position: center;
   background-repeat: no-repeat;
@@ -284,7 +303,7 @@ a different filename.
 
 .hero-title {
   margin-block: 0;
-  color: var(--yellow);
+  color: var(--blue);
   font-size: 40px;
 }
 
@@ -299,19 +318,19 @@ a different filename.
 ===================================================== */
 
 .pill-button {
-  display: flex;
-  width: min(80%, 520px);
+  /* display: flex; */
+  /* width: min(80%, 520px); */
   align-items: center;
   justify-content: center;
 
-  min-width: 230px;
+  /* min-width: 230px; */
   padding: 8px;
 
   border: 0;
   border-radius: 50px;
 
-  background-color: var(--yellow);
-  color: var(--green);
+  background-color: var(--pink);
+  color: var(--cream);
 
   text-decoration: none;
   cursor: pointer;
@@ -359,8 +378,8 @@ a different filename.
 .menu-heading-strip {
   padding-block: 8px;
 
-  background-color: var(--yellow);
-  color: var(--green);
+  background-color: var(--blue);
+  color: var(--cream);
 
   text-align: center;
 }
@@ -395,7 +414,7 @@ a different filename.
 }
 
 .menu-course-title {
-  color: var(--green);
+  color: var(--blue);
   font-weight: 700;
 }
 
@@ -409,7 +428,7 @@ a different filename.
 }
 
 .menu-description {
-  color: var(--green);
+  color: var(--blue);
 }
 
 /* =====================================================
@@ -417,10 +436,15 @@ a different filename.
 ===================================================== */
 
 .about-section {
-  padding: 8px 20px 0;
+  /* padding: 8px 20px 0; */
+  padding-block: 50px;
 
   background-color: var(--blue);
   color: var(--yellow-light);
+}
+
+.about-text-content{
+  padding: 8px 20px 0;
 }
 
 .about-heading {
@@ -457,6 +481,7 @@ a different filename.
 }
 
 .divisor {
+  display: none;
   width: 100%;
   height: 105px;
   margin: 0;
@@ -464,9 +489,9 @@ a different filename.
 
   background-image:
       url("./assets/img/0e84b322-8e8f-4eb5-a71e-b6f8a165fb94 2.png");
-  background-position: center;
+  /* background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
 
 /* =====================================================
@@ -574,7 +599,7 @@ a different filename.
 .popup-venue {
   margin-top: 0;
 
-  color: var(--green);
+  color: var(--blue);
   font-weight: 700;
 }
 
@@ -589,7 +614,7 @@ a different filename.
 .popup-date {
   margin-top: 0;
 
-  color: var(--green);
+  color: var(--blue);
   font-weight: 700;
 }
 
@@ -654,6 +679,14 @@ a different filename.
   background: #F2F7FC;
 }
 
+.about-image-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+
 #ticket-qty {
   width: 60px;
 
@@ -688,6 +721,8 @@ a different filename.
 .buy-ticket-button {
   align-self: center;
   margin-top: 5px;
+  display: flex;
+  width: min(80%, 520px);
 }
 
 .popup-disclaimer {
@@ -831,6 +866,11 @@ a different filename.
   color: var(--black);
 }
 
+.about-image{
+  width: 40%;
+}
+
+
 /* =====================================================
  TABLET
 ===================================================== */
@@ -850,6 +890,29 @@ a different filename.
 ===================================================== */
 
 @media (max-width: 780px) {
+  .ticket-total{
+    margin-inline: 0;
+  }
+
+  .about-section {
+    padding-block: 0px;
+  }
+
+  .about-image{
+    width: 100%;
+  }
+
+  .divisor{
+    display: block;
+  }
+
+  .about-image-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0px;
+  }
+
   :root {
       --header-height: 132px;
   }
@@ -895,7 +958,7 @@ a different filename.
 
   .hero-section,
   .hero-content {
-      min-height: 100svh;
+    margin-top: var(--header-height);
   }
 
   .hero-content {
@@ -947,7 +1010,7 @@ a different filename.
   }
 
   .pill-button{
-    width: 100%;
+    width: 80%;
   }
 
   .ticket-row {
@@ -999,259 +1062,4 @@ a different filename.
   .popup-date {
       font-size: 17px;
   }
-}
-
-/* =====================================================
- REDUCED MOTION
-===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-      scroll-behavior: auto;
-  }
-
-  .header,
-  .age-gate__btn {
-      transition: none;
-  }
-}
-
-.hero-section,
-.hero-content {
-  min-height: 100svh;
-}
-
-.hero-content {
-  position: relative;
-  overflow: hidden;
-}
-
-/*
-Change these variables to adjust the spacing globally.
-*/
-.vertical-marquees {
-  --column-gap: 8px;
-  --image-gap: 20px;
-  --side-padding: clamp(12px, 2vw, 32px);
-
-  position: absolute;
-  inset: 0;
-
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--column-gap);
-
-  width: 100%;
-  height: 100%;
-  padding-inline: var(--side-padding);
-
-  box-sizing: border-box;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.marquee-column {
-  position: relative;
-  min-width: 0;
-  height: 100%;
-  overflow: hidden;
-
-  /*
-  Creates the transparent fade at the top and bottom.
-  The prefixed version supports Safari.
-  */
-  -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 9%,
-      black 91%,
-      transparent 100%
-  );
-
-  mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 9%,
-      black 91%,
-      transparent 100%
-  );
-
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-.marquee-track {
-  display: flex;
-  flex-direction: column;
-  gap: var(--image-gap);
-
-  width: 100%;
-  will-change: transform;
-}
-
-.marquee-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--image-gap);
-
-  width: 100%;
-
-  /*
-  Gives the shadows a little room so they are not
-  immediately clipped by the column boundaries.
-  */
-  padding-inline: 6px;
-  box-sizing: border-box;
-}
-
-/*
-Polaroid-style frame.
-*/
-.polaroid {
-  width: 100%;
-  margin: 0;
-
-  padding:
-      clamp(6px, 0.65vw, 10px)
-      clamp(6px, 0.65vw, 10px)
-      clamp(15px, 1.5vw, 25px);
-
-  background: #ffffff;
-
-  box-shadow:
-      7px 9px 16px rgba(0, 0, 0, 0.18);
-
-  box-sizing: border-box;
-}
-
-/*
-The image always fits the column width while preserving
-its original aspect ratio. Nothing is cropped.
-*/
-.polaroid img {
-  display: block;
-
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-
-  object-fit: contain;
-}
-
-/*
-Animations are added only after JavaScript has measured
-the exact content height.
-*/
-.marquee-column--up .marquee-track.is-animated {
-  animation-name: marquee-scroll-up;
-  animation-duration: var(--duration);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.marquee-column--down .marquee-track.is-animated {
-  animation-name: marquee-scroll-down;
-  animation-duration: var(--duration);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes marquee-scroll-up {
-  from {
-      transform: translate3d(0, 0, 0);
-  }
-
-  to {
-      transform: translate3d(
-          0,
-          calc(-1 * var(--travel)),
-          0
-      );
-  }
-}
-
-@keyframes marquee-scroll-down {
-  from {
-      transform: translate3d(
-          0,
-          calc(-1 * var(--travel)),
-          0
-      );
-  }
-
-  to {
-      transform: translate3d(0, 0, 0);
-  }
-}
-
-/*
-On mobile, keep only the two middle columns.
-*/
-@media screen and (max-width: 767px) {
-  .ticket-total {
-    font-size: 12px;
-    margin-inline: 20px;
-  }
-
-  .vertical-marquees {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      padding-inline: 12px;
-  }
-
-  .marquee-column:nth-child(1),
-  .marquee-column:nth-child(4) {
-      display: none;
-  }
-}
-
-/*
-Users who prefer reduced motion receive a static version.
-*/
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track,
-  .marquee-track.is-animated {
-      animation: none !important;
-      transform: none !important;
-      will-change: auto;
-  }
-}
-
-/* Smooth transition between transparent and docked header states */
-.header-link {
-  transition:
-      color 0.35s ease,
-      background-color 0.35s ease,
-      text-shadow 0.35s ease;
-}
-
-/* Header is transparent: all navigation text is white */
-.header:not(.is-docked) .header-link {
-  color: var(--white);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-}
-
-/* Header is white: restore the individual brand colors */
-.header.is-docked .dinners-link {
-  color: var(--pink);
-}
-
-.header.is-docked .about-link {
-  color: var(--blue-light);
-}
-
-.header.is-docked .contact-link {
-  color: var(--green);
-}
-
-.header.is-docked .tickets-link {
-  background-color: var(--yellow);
-  color: var(--pink);
-}
-
-/* Remove the shadow once the white background appears */
-.header.is-docked .header-link {
-  text-shadow: none;
 }
