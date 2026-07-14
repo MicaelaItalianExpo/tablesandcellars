@@ -299,7 +299,8 @@ a different filename.
 ===================================================== */
 
 .pill-button {
-  display: inline-flex;
+  display: flex;
+  width: min(80%, 520px);
   align-items: center;
   justify-content: center;
 
@@ -945,6 +946,10 @@ a different filename.
       width: 100%;
   }
 
+  .pill-button{
+    width: 100%;
+  }
+
   .ticket-row {
       width: 100%;
   }
@@ -1186,6 +1191,11 @@ the exact content height.
 On mobile, keep only the two middle columns.
 */
 @media screen and (max-width: 767px) {
+  .ticket-total {
+    font-size: 12px;
+    margin-inline: 20px;
+  }
+
   .vertical-marquees {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       padding-inline: 12px;
