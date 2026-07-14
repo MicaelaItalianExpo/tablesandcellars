@@ -563,9 +563,10 @@ a different filename.
 
 .popup-title {
   margin: 10px;
+  margin-inline: 80px;
 
   color: var(--blue-light);
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -581,6 +582,7 @@ a different filename.
 
   color: var(--pink);
   font-weight: 500;
+  text-align: center;
 }
 
 .popup-date {
@@ -617,6 +619,9 @@ a different filename.
 .ticket-total {
   display: flex;
   flex-direction: row;
+
+  text-align: center;
+  margin-inline: 70px;
 }
 
 .qty-control {
