@@ -258,7 +258,7 @@ shrinks toward .header-logo-slot while scrolling.
   margin-top: var(--header-height);
 
   width: 100%;
-  min-height: 30vh;
+  /* min-height: 30vh; */
 
   overflow: hidden;
 
